@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <main>
+        <nav class="navtop">
+            <div class="container">
+                <a class="nav-title" href="index.html">My Website</a>
+                <div>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="resume.html">Resume</a></li>
+                        <li class="nav-item"><a class="nav-link" href="app.html">App</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <section>
+            <h2><span id="vacay">What vacation should you take?</span></h2>
+            <h4>Need a break? Take a vacation!</h4>
+            <br>
+            <div id="quiz">
+                <div id="quiz-container"></div>
+                <img id="world" src="/assets/world.png">
+                <div id="result"></div>
+            </div>
+              <!-- Javascript for game-->
+              <script>
+                const questions = [
+                  {
+                    question: "What sounds like the perfect weekend?",
+                    image: "/assets/world.png",
+                    options: [
+                      { text: "Relaxing on the beach", type: "Beach" },
+                      { text: "Hiking through mountains", type: "Nature" },
+                      { text: "Exploring a bustling city", type: "City" },
+                      { text: "Skydiving or white-water rafting", type: "Adventure" }
+                    ]
+                  },
+                  {
+                    question: "Pick a dream activity:",
+                    image: "/assets/world.png", 
+                    options: [
+                      { text: "Snorkeling in turquoise waters", type: "Beach" },
+                      { text: "Climbing a remote peak", type: "Adventure" },
+                      { text: "Trying street food in a foreign country", type: "City" },
+                      { text: "Stargazing in the wilderness", type: "Nature" }
+                    ]
+                  },
+                  {
+                    question: "Your ideal travel companion is:",
+                    image: "/assets/world.png",
+                    options: [
+                      { text: "A good book and the sound of waves", type: "Beach" },
+                      { text: "A group of thrill-seekers", type: "Adventure" },
+                      { text: "Locals with great stories", type: "City" },
+                      { text: "A cozy cabin and wildlife", type: "Nature" }
+                    ]
+                  },
+                  {
+                    question: "Which word best describes you?",
+                    image: "/assets/world.png",
+                    options: [
+                      { text: "Laid-back", type: "Beach" },
+                      { text: "Curious", type: "City" },
+                      { text: "Daring", type: "Adventure" },
+                      { text: "Peaceful", type: "Nature" }
+                    ]
+                  }
+                ];
+            
+                let currentQuestion = 0;
+                const scores = {
+                  Beach: 0,
+                  Adventure: 0,
+                  City: 0,
+                  Nature: 0
+                };
+            
+                function showQuestion() {
+                  const container = document.getElementById("quiz-container");
+                  container.innerHTML = "";
+                  if (currentQuestion >= questions.length) {
+                    return showResult();
+                  }
+            
+                  const q = questions[currentQuestion];
+                  const imageEl = document.getElementById("world");
+                    if (q.image) {
+                    imageEl.src = q.image;
+                    }
+
+                  const questionDiv = document.createElement("div");
+                  questionDiv.className = "question";
+                  questionDiv.innerHTML = `<h3>${q.question}</h3>`;
+            
+                  q.options.forEach(opt => {
+                    const btn = document.createElement("button");
+                    btn.textContent = opt.text;
+                    btn.onclick = () => {
+                      scores[opt.type]++;
+                      currentQuestion++;
+                      showQuestion();
+                    };
+                    questionDiv.appendChild(btn);
+                  });
+            
+                  container.appendChild(questionDiv);
+                }
+            
+                function showResult() {
+                  const container = document.getElementById("quiz-container");
+                  container.style.display = "none";
+                  document.getElementById("world").style.display = "none";
+            
+                  const resultDiv = document.getElementById("result");
+                  resultDiv.style.display = "block";
+            
+                  const topType = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            
+                  const descriptions = {
+                    Beach: "You need sun, sand, and sea! A beach vacation is perfect for unwinding and soaking up some vitamin D.",
+                    Adventure: "You crave excitement! It's time for an adrenaline-packed trip — think skydiving, jungle trekking, or rafting.",
+                    City: "You're a culture buff! A vibrant city filled with food, art, and history is calling your name.",
+                    Nature: "Peace and quiet is your vibe. Head to the mountains, forests, or a cabin in the woods for a soul-refreshing break."
+                  };
+            
+                  resultDiv.innerHTML = `
+                    <h2>Your Ideal Vacation: ${topType}</h2>
+                    <p>${descriptions[topType]}</p>
+                    <button id="restart-button">Restart Quiz</button>
+                    `;
+                    
+                    document.getElementById("restart-button").onclick = function() {
+                        window.location.reload();
+                    };
+                }
+
+                showQuestion();
+              </script>
+        </section>
+</body>
+</html>
