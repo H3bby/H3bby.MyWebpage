@@ -80,6 +80,7 @@ nav {
     display: flex;
     flex-direction: row;
     margin-right: 5rem;
+    color: gray;
 }
 
 .nav-link, .nav-item {
