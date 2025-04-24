@@ -87,7 +87,7 @@ nav {
     list-style: none;
     flex-wrap: wrap;
     text-decoration: none;
-    font-color: gray;
+    color: gray;
     font-weight: bold;
     margin-left: 1.2vh;
 }
